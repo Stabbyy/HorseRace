@@ -1,11 +1,11 @@
 package com.example;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class HorsesDataBase {
@@ -25,16 +25,18 @@ public class HorsesDataBase {
         return currentHorses;
     }
 
-    public void horsesFromTxt() {
-        File file = new File("src/main/resources/horses.txt");
-        try {
-            Scanner scan = new Scanner(file);
-            while (scan.hasNextLine()) {
-                horses.add(scan.nextLine());
+    public void horsesFromDB() {
+        DBHorses dbHorses = new DBHorses();
+        String query = "select name from horses order by id";
+
+        try (Statement statement = dbHorses.getConnection().createStatement()) {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String horseName = resultSet.getString("name");
+                horses.add(horseName);
             }
-            scan.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Error " + e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
