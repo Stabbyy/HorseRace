@@ -1,12 +1,13 @@
 package com.example;
 
 import com.example.entity.Horses;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
+@Component
 public class HorsesDataBase {
 
     private static final int DEFAULT_HORSE_COUNT = 5;
