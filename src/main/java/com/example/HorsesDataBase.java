@@ -1,8 +1,7 @@
 package com.example;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.example.entity.Horses;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,18 +24,9 @@ public class HorsesDataBase {
         return currentHorses;
     }
 
-    public void horsesFromDB() {
-        DBHorses dbHorses = new DBHorses();
-        String query = "select name from horses order by id";
-
-        try (Statement statement = dbHorses.getConnection().createStatement()) {
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                String horseName = resultSet.getString("name");
-                horses.add(horseName);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void horsesHibernate() {
+        for (Horses horse : new HorsesHelper().getHorsesList()) {
+            horses.add(horse.getName());
         }
     }
 }

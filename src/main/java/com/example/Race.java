@@ -12,7 +12,7 @@ public class Race {
         RaceSimulator raceSimulator = new RaceSimulator();
         HorsesDataBase horses = new HorsesDataBase();
 
-        horses.horsesFromDB();
+        horses.horsesHibernate();
 
         List<String> raceHorses = horses.getHorses();
 
