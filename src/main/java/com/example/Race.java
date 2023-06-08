@@ -1,13 +1,14 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Scanner;
 
 @Component
-public class Race {
+public class Race implements CommandLineRunner {
 
     private final RaceSimulator raceSimulator;
     private final HorsesDataBase horsesDataBase;
@@ -21,13 +22,11 @@ public class Race {
         this.horsesDataBase = horsesDataBase;
     }
 
-    public void run() {
+    @Override
+    public void run(String... args) {
         horsesDataBase.horsesHibernate();
-
         List<String> raceHorses = horsesDataBase.getHorses();
-
         printHorses(raceHorses);
-
         int chosenHorse = pickWinner();
         int winner = raceSimulator.determineWinner(raceHorses);
         printResult(raceHorses, chosenHorse, winner);
