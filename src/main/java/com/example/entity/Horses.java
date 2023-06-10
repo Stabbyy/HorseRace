@@ -1,10 +1,10 @@
 package com.example.entity;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity

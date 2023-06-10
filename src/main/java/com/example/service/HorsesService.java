@@ -1,19 +1,29 @@
-package com.example;
+package com.example.service;
 
 import com.example.entity.Horses;
-import org.springframework.stereotype.Component;
+import com.example.repositories.HorsesRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-@Component
-public class HorsesDataBase {
+@Service
+@RequiredArgsConstructor
+public class HorsesService {
 
     private static final int DEFAULT_HORSE_COUNT = 5;
+
     private final List<String> horses = new ArrayList<>();
     private final Random random = new Random();
+    private final HorsesRepository horsesRepository;
+
+    public List<Horses> findHorsesByName() {
+        return horsesRepository.findAll();
+    }
 
     public List<String> getHorses() {
         List<String> currentHorses = new ArrayList<>();
@@ -26,8 +36,8 @@ public class HorsesDataBase {
         return currentHorses;
     }
 
-    public void horsesHibernate() {
-        for (Horses horse : new HorsesHelper().getHorsesList()) {
+    public void addHorses() {
+        for (Horses horse : findHorsesByName()) {
             horses.add(horse.getName());
         }
     }

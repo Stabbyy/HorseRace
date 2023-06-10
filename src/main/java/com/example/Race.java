@@ -1,6 +1,7 @@
 package com.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.service.HorsesService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -8,24 +9,19 @@ import java.util.List;
 import java.util.Scanner;
 
 @Component
+@RequiredArgsConstructor
 public class Race implements CommandLineRunner {
 
     private final RaceSimulator raceSimulator;
-    private final HorsesDataBase horsesDataBase;
+    private final HorsesService horsesService;
 
     private static final int FIRST_CHOICE_HORSE = 1;
     private static final int LAST_CHOICE_HORSE = 5;
 
-    @Autowired
-    public Race(RaceSimulator raceSimulator, HorsesDataBase horsesDataBase) {
-        this.raceSimulator = raceSimulator;
-        this.horsesDataBase = horsesDataBase;
-    }
-
     @Override
     public void run(String... args) {
-        horsesDataBase.horsesHibernate();
-        List<String> raceHorses = horsesDataBase.getHorses();
+        horsesService.addHorses();
+        List<String> raceHorses = horsesService.getHorses();
         printHorses(raceHorses);
         int chosenHorse = pickWinner();
         int winner = raceSimulator.determineWinner(raceHorses);
